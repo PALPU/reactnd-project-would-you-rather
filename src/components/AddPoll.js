@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import TitleBar from "./TitleBar";
 import { handleAddPoll } from "../actions/shared";
 import { Redirect } from "react-router-dom";
 
@@ -42,7 +41,6 @@ class AddPoll extends Component {
 
     return (
       <Fragment>
-        <TitleBar />
         <div className="form margin poll-details-form">
           <div className="form-header">
             <p className="form-title">Would You Rather</p>

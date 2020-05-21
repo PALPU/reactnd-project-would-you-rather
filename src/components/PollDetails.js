@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import TitleBar from "./TitleBar";
 import { formatDate } from "../utils/helpers";
 import FaCheck from "react-icons/lib/fa/check";
 import { handleSavePollAnswer } from "../actions/shared";
+import PageNotFound from "./PageNotFound";
 
 //pollDetails is the component which renders all the details of a particular poll
 class PollDetails extends Component {
@@ -16,7 +16,6 @@ class PollDetails extends Component {
       selectedOption: e.target.value,
     });
   };
-
   submitAnswer = (e) => {
     e.preventDefault();
 
@@ -37,19 +36,22 @@ class PollDetails extends Component {
       isOneAnswered,
       isTwoAnswered,
     } = this.props;
-    const optionOneVotes = poll.optionOne.votes.length;
-    const optionTwoVotes = poll.optionTwo.votes.length;
-    const optionOnePercentage = (
-      (optionOneVotes / (optionOneVotes + optionTwoVotes)) *
-      100
-    ).toFixed(2);
-    const optionTwoPercentage = (
-      (optionTwoVotes / (optionOneVotes + optionTwoVotes)) *
-      100
-    ).toFixed(2);
-    return (
+    const optionOneVotes = poll !== null ? poll.optionOne.votes.length : null;
+    const optionTwoVotes = poll !== null ? poll.optionTwo.votes.length : null;
+    const optionOnePercentage =
+      poll !== null
+        ? ((optionOneVotes / (optionOneVotes + optionTwoVotes)) * 100).toFixed(
+            2
+          )
+        : 0;
+    const optionTwoPercentage =
+      poll !== null
+        ? ((optionTwoVotes / (optionOneVotes + optionTwoVotes)) * 100).toFixed(
+            2
+          )
+        : 0;
+    return poll !== null ? (
       <Fragment>
-        <TitleBar />
         <div className="form margin poll-details-form">
           <div className="form-header">
             <p className="form-title">Would You Rather</p>
@@ -132,6 +134,8 @@ class PollDetails extends Component {
           </div>
         </div>
       </Fragment>
+    ) : (
+      <PageNotFound />
     );
   }
 }
@@ -139,6 +143,9 @@ class PollDetails extends Component {
 function mapStateToProps({ authedUser, polls, users }, props) {
   const { question_id } = props.match.params;
   const poll = polls[question_id];
+  if (poll === null || poll === undefined) {
+    return { poll: null };
+  }
   const authorAvatar = users[poll.author].avatarURL;
   const author = users[poll.author].id;
   const timestamp = formatDate(poll.timestamp);

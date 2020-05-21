@@ -13,6 +13,9 @@ class Account extends Component {
 
   render() {
     const { authedUser, avatar } = this.props;
+    if (authedUser === null) {
+      return null;
+    }
     return (
       <Fragment>
         <ul className="nav nav-account">
@@ -34,7 +37,7 @@ class Account extends Component {
 }
 
 function mapStateToProps({ authedUser, users }) {
-  const avatar = users[authedUser].avatarURL;
+  const avatar = authedUser !== null ? users[authedUser].avatarURL : null;
   return {
     authedUser,
     avatar,

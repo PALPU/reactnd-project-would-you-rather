@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import TitleBar from "./TitleBar";
+// import TitleBar from "./TitleBar";
 
 // Component Leaderboard renders the LeaderBoard Page
 class Leaderboard extends Component {
@@ -8,7 +8,6 @@ class Leaderboard extends Component {
     const { users, data } = this.props;
     return (
       <Fragment>
-        <TitleBar />
         <table className="table">
           <thead>
             <tr>

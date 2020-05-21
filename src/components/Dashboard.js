@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import Poll from "./Poll";
-import TitleBar from "./TitleBar";
 import { handleInitialPolls } from "../actions/shared";
 
 //renders the DashBoard Component with answered and unanswered tabs
@@ -18,7 +17,6 @@ class Dashboard extends Component {
     const { answeredPolls, unansweredPolls, loadingBar } = this.props;
     return (
       <Fragment>
-        <TitleBar />
         <ul className="toggler">
           <li
             className={
@@ -94,6 +92,7 @@ function mapStateToProps({ polls, authedUser, users, loadingBar }) {
     answeredPolls,
     unansweredPolls,
     loadingBar,
+    authedUser,
   };
 }
 
